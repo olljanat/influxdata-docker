@@ -23,10 +23,8 @@ RUN $url = ('https://dl.influxdata.com/telegraf/releases/telegraf-{0}_windows_am
     Remove-Item telegraf.zip -Force; \
     Write-Host 'Complete.';
 
-# COPY entrypoint.ps1 C:\telegraf\entrypoint.ps1
-
 FROM microsoft/nanoserver:1803
 USER ContainerAdministrator
-COPY --from=build ["/telegraf","/telegraf"]
-WORKDIR C:\telegraf
+COPY --from=build ["/telegraf/","/telegraf/"]
+WORKDIR /telegraf
 ENTRYPOINT ["telegraf.exe","--config","c:\telegraf\telegraf.conf"]
